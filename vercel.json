@@ -1,0 +1,7 @@
+# Vercel deployment configuration
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/$1" }
+  ]
+}

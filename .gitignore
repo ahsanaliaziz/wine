@@ -1,0 +1,5 @@
+# Ignore local database and logs
+orders.json
+.DS_Store
+*.pyc
+__pycache__/

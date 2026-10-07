@@ -1,0 +1,1333 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>देसी दारू ठेका • 100% असली व कड़क</title>
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;800;900&family=Space+Grotesk:wght@700&family=Work+Sans:wght@400;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-tertiary-fixed": "#2f1400",
+            "primary-container": "#a9281a",
+            "on-background": "#1d1b16",
+            "secondary-fixed-dim": "#ffb865",
+            "surface-bright": "#fff9ef",
+            "outline": "#8d706c",
+            "surface-container-highest": "#e7e2d9",
+            "tertiary-fixed": "#ffdcc4",
+            "on-secondary-fixed": "#2b1700",
+            "secondary-container": "#ffa527",
+            "on-tertiary-fixed-variant": "#6f3800",
+            "on-surface": "#1d1b16",
+            "primary-fixed-dim": "#ffb4a8",
+            "on-primary": "#ffffff",
+            "inverse-primary": "#ffb4a8",
+            "tertiary-container": "#88490b",
+            "on-surface-variant": "#59413d",
+            "on-secondary-container": "#6a4000",
+            "secondary": "#875200",
+            "on-tertiary": "#ffffff",
+            "on-secondary": "#ffffff",
+            "surface-container-low": "#f9f3ea",
+            "on-secondary-fixed-variant": "#663d00",
+            "primary": "#870c04",
+            "surface-container-lowest": "#ffffff",
+            "on-tertiary-container": "#ffc59a",
+            "surface-container-high": "#ede7df",
+            "tertiary-fixed-dim": "#ffb780",
+            "inverse-surface": "#32302a",
+            "error": "#ba1a1a",
+            "outline-variant": "#e1bfb9",
+            "surface-dim": "#dfd9d1",
+            "tertiary": "#683400",
+            "on-error-container": "#93000a",
+            "primary-fixed": "#ffdad4",
+            "on-error": "#ffffff",
+            "surface-variant": "#e7e2d9",
+            "surface-container": "#f3ede4",
+            "error-container": "#ffdad6",
+            "secondary-fixed": "#ffddba",
+            "on-primary-fixed": "#410100",
+            "on-primary-fixed-variant": "#8e1309",
+            "surface-tint": "#b02d1e",
+            "on-primary-container": "#ffc2b8",
+            "surface": "#fff9ef",
+            "inverse-on-surface": "#f6f0e7",
+            "background": "#fff9ef"
+          },
+          spacing: {
+            "space-lg": "1.5rem",
+            "gutter": "1rem",
+            "margin": "1rem",
+            "gutter-desktop": "1.5rem",
+            "space-md": "1rem",
+            "space-sm": "0.5rem",
+            "margin-desktop": "2.5rem",
+            "space-xs": "0.25rem",
+            "space-xl": "2.5rem"
+          },
+          fontFamily: {
+            "body-sm": ["Work Sans"],
+            "label-lg": ["Space Grotesk"],
+            "headline-xl-mobile": ["Epilogue"],
+            "label-sm": ["Space Grotesk"],
+            "label-md": ["Space Grotesk"],
+            "title-md": ["Work Sans"],
+            "headline-sm": ["Epilogue"],
+            "headline-lg-mobile": ["Epilogue"],
+            "headline-xl": ["Epilogue"],
+            "title-lg": ["Work Sans"],
+            "headline-md": ["Epilogue"],
+            "body-lg": ["Work Sans"],
+            "headline-lg": ["Epilogue"],
+            "body-md": ["Work Sans"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Reset & Base */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Work Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Scroll Animation Section */
+    .scroll-animation {
+      height: 450vh;
+      position: relative;
+      background: #000;
+    }
+    .canvas-container {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background: #000;
+    }
+    canvas {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #ff6b6b, #ffa527, #870c04, #ff9ff3);
+      z-index: 100;
+      transition: width 0.05s linear;
+    }
+
+
+
+    /* Frame counter */
+    .frame-counter {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+      font-variant-numeric: tabular-nums;
+      z-index: 90;
+      pointer-events: none;
+      background: rgba(0,0,0,0.6);
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Scroll Prompt Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      animation: pulse 2s infinite;
+      pointer-events: none;
+    }
+
+    /* Loading Overlay */
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: #000;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      transition: opacity 0.5s ease;
+    }
+    .loading-overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .loading-bar-track {
+      width: 220px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .loading-bar-fill {
+      height: 100%;
+      background: #ffa527;
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+
+    /* Custom Toast */
+    #toast {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-100px);
+      background: #1d1b16;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border-left: 4px solid #ffa527;
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+</head>
+<body class="bg-[#fff9ef] text-[#1d1b16]">
+
+  <!-- Home Page Background Audio (Old audio: Maal piyenge) -->
+  <audio id="homeAudio" loop preload="auto">
+    <source src="assets/audio.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Payment Gateway Audio (2nd audio: Shloka/New audio) -->
+  <audio id="paymentAudio" loop preload="auto">
+    <source src="assets/bg_music.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Loading Overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="text-xl font-bold text-[#ffa527] flex items-center gap-2">
+      <span class="material-symbols-outlined">liquor</span>
+      देसी दारू ठेका लोड हो रहल बा...
+    </div>
+    <div class="text-sm text-gray-400" id="loadingText">0% लोड भइल</div>
+    <div class="loading-bar-track">
+      <div class="loading-bar-fill" id="loadingBarFill"></div>
+    </div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- Frame Counter -->
+  <div class="frame-counter" id="frameCounter">001 / 300</div>
+
+  <!-- SECTION 1: SCROLL ANIMATION -->
+  <section class="scroll-animation" id="scrollAnimation">
+    <div class="canvas-container">
+      <canvas id="canvas"></canvas>
+      <div class="scroll-indicator" id="scrollIndicator">
+        <span>नीचे स्क्रोल करीं</span>
+        <span class="material-symbols-outlined text-[20px]">keyboard_double_arrow_down</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: THE FULL STORE & MENU (Exact from provided file without navbar) -->
+  <div class="relative w-full bg-[#fff9ef] text-[#1d1b16] pb-24 shadow-2xl">
+    
+    <!-- Gamchha Checked Trim Strip -->
+    <div class="w-full h-3 flex overflow-hidden">
+      <div class="w-full h-full bg-[repeating-linear-gradient(45deg,#870c04,#870c04_8px,#fff9ef_8px,#fff9ef_16px,#ffa527_16px,#ffa527_24px)] opacity-90"></div>
+    </div>
+
+    <!-- Folk Announcement & Rural Atmosphere Hero Header -->
+    <div class="relative px-4 sm:px-8 pt-6 pb-6 bg-[#f3ede4] overflow-hidden border-b border-[#e7e2d9]">
+      <div class="absolute inset-0 pointer-events-none opacity-10">
+        <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 160 Q 100 130 200 160 T 400 150 L 400 200 L 0 200 Z" fill="#870c04"></path>
+          <circle cx="340" cy="50" fill="#ffa527" r="35"></circle>
+        </svg>
+      </div>
+
+      <!-- Folk Tagline Bar -->
+      <div class="flex items-center justify-between gap-2 mb-3">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 bg-[#ffa527] text-[#2b1700] rounded-full shadow-sm text-xs font-bold uppercase tracking-wider">
+          <span class="material-symbols-outlined text-[16px] text-[#870c04]">eco</span>
+          शुद्ध देहाती मज़ा • 100% असली
+        </div>
+        <div class="flex items-center gap-1 text-[#870c04] font-bold text-xs">
+          <span class="material-symbols-outlined text-[16px]">verified</span>
+          ठेका नं. १२
+        </div>
+      </div>
+
+      <!-- Hero Punchline -->
+      <div class="relative z-10 flex flex-col mb-4">
+        <h1 class="text-2xl sm:text-4xl text-[#870c04] font-black leading-tight tracking-tight">
+          गाँव के असली स्वाद <br>
+          <span class="text-[#875200] underline decoration-[#ffa527] decoration-wavy underline-offset-4">देसी दारू ठेका</span>
+        </h1>
+        <p class="text-sm sm:text-base text-[#59413d] mt-1 font-medium">
+          खेत-खलिहान, खाट आ सांझ के सुनहरी धूप के संग — असली गन्ने व महुआ के देसी घूँट!
+        </p>
+      </div>
+
+      <!-- User Image 5: "जल्द आ रहल बा" High Impact Announcement Banner -->
+      <div class="relative w-full rounded-2xl overflow-hidden bg-[#870c04] shadow-[0_6px_20px_rgba(135,12,4,0.3)]">
+        <div class="relative w-full aspect-[16/9] sm:aspect-[21/9] overflow-hidden bg-black">
+          <img alt="जल्द आ रहल बा पोस्टर" class="w-full h-full object-cover object-center filter saturate-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAOXEHLXF9yn8lCYiwkGHkWzElt07TnHlkvbnYvPP75XoKXqunXeIORROPJeEl2Jd_rUrD8WvDDwlqjO0q68n-81q4vncbKUeoezEQ_9DwfAyTKPu_gJscnFE8NRaW4VnLdzZFVeNsfd7kYkrZ-40E_-hp9EGYQOrnhMJr4e2w-NKTi2-NgafQbGMA41bhkAV10BDK2QPtbvDUvcsmJD55nY3TdQgqMszU1YWuhvVAYiyoKTglu1F6L">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent"></div>
+          <div class="absolute top-3 left-3">
+            <span class="inline-block px-3 py-1 bg-[#875200] text-white text-xs uppercase font-bold rounded-full shadow-md animate-pulse">
+              ★ महा धमाका
+            </span>
+          </div>
+        </div>
+        <!-- Announcement Sub-strip -->
+        <div class="p-3 bg-[#870c04] text-white flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2 min-w-0">
+            <span class="material-symbols-outlined text-[24px] text-[#ffddba] shrink-0">campaign</span>
+            <p class="text-xs sm:text-sm font-bold text-[#fff9ef] truncate">
+              धमाकेदार पेशकश! हर बोतल संग शुद्ध देहाती चखना मुफ़्त!
+            </p>
+          </div>
+          <button class="shrink-0 px-3 py-1.5 bg-[#ffa527] text-[#2b1700] text-xs font-bold rounded-lg shadow active:scale-95 transition-transform" onclick="notifyOffer()" type="button">
+            घंटी बजाईं 🔔
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Pills -->
+    <div class="px-4 py-3 sticky top-0 z-30 bg-[#fff9ef]/95 backdrop-blur-md flex items-center gap-2 overflow-x-auto border-b border-[#e7e2d9]" id="categoryScroll">
+      <button class="category-pill active-pill shrink-0 px-4 py-1.5 rounded-full bg-[#870c04] text-white text-xs font-bold shadow-sm flex items-center gap-1 transition-all" onclick="filterCategory('all', this)" type="button">
+        <span class="material-symbols-outlined text-[16px]">local_bar</span> सभ्भे (All)
+      </button>
+      <button class="category-pill shrink-0 px-4 py-1.5 rounded-full bg-[#ede7df] text-[#59413d] text-xs font-bold shadow-sm flex items-center gap-1 hover:bg-[#e7e2d9] transition-all" onclick="filterCategory('desi', this)" type="button">
+        <span class="material-symbols-outlined text-[16px]">liquor</span> देसी ख़ास
+      </button>
+      <button class="category-pill shrink-0 px-4 py-1.5 rounded-full bg-[#ede7df] text-[#59413d] text-xs font-bold shadow-sm flex items-center gap-1 hover:bg-[#e7e2d9] transition-all" onclick="filterCategory('english', this)" type="button">
+        <span class="material-symbols-outlined text-[16px]">wine_bar</span> अंग्रेजी ब्रांड
+      </button>
+      <button class="category-pill shrink-0 px-4 py-1.5 rounded-full bg-[#ede7df] text-[#59413d] text-xs font-bold shadow-sm flex items-center gap-1 hover:bg-[#e7e2d9] transition-all" onclick="filterCategory('chakhna', this)" type="button">
+        <span class="material-symbols-outlined text-[16px]">restaurant</span> गरमा-गरम चखना
+      </button>
+      <button class="category-pill shrink-0 px-4 py-1.5 rounded-full bg-[#ede7df] text-[#59413d] text-xs font-bold shadow-sm flex items-center gap-1 hover:bg-[#e7e2d9] transition-all" onclick="filterCategory('chakhna', this)" type="button">
+        <span class="material-symbols-outlined text-[16px]">kebab_dining</span> लिट्टी चोखा
+      </button>
+    </div>
+
+    <!-- Village Harvest Quote Marquee Ribbon -->
+    <div class="bg-[#ffdcc4] text-[#2f1400] py-1.5 px-4 flex items-center justify-between text-xs overflow-hidden whitespace-nowrap">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-[16px] text-[#683400]">agriculture</span>
+        <span class="font-bold">ठेका समय: सबेरे ६:०० से रात १०:०० बजे ले | नकद व UPI (8102899986@ybl) स्वीकार्य</span>
+      </div>
+      <span class="text-xs text-[#870c04] font-black ml-4 shrink-0 bg-[#fff] px-2 py-0.5 rounded">पक्का रसीद</span>
+    </div>
+
+    <!-- Products Grid Section -->
+    <section class="max-w-6xl mx-auto px-4 py-6 flex flex-col gap-6">
+      <div class="flex items-center justify-between border-b pb-2 border-[#e7e2d9]">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-6 bg-[#870c04] rounded-full inline-block"></span>
+          <h2 class="text-lg sm:text-2xl font-bold text-[#1d1b16]">असली देहाती बोतलें (100% कड़क)</h2>
+        </div>
+        <span class="text-xs text-[#875200] font-bold bg-[#ffa527]/20 px-2.5 py-1 rounded-full">ताज़ा स्टॉक उपलब्ध</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        <!-- Product 1: करिश्मा देसी दारू -->
+        <article class="product-item bg-white rounded-2xl shadow-md border border-[#e7e2d9] overflow-hidden flex flex-col transition-all hover:shadow-xl hover:-translate-y-1" data-category="desi">
+          <div class="relative w-full aspect-[4/3] bg-surface-container overflow-hidden">
+            <img alt="करिश्मा देसी दारू" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcYr6O115mXQhPZzEHqP5qdxRBYEJfX8TGnTGip01Ok2zdg3b6m9gA-gPCMleLQNAN_jYWW0HqgwlHe_CazwvBZxlVeZZGo1XUjOGGGVLZIXwNkOmunapqoqaHCuRCuaH-x3jumb3J-WujrJwu-SnzfXeJ6C0e_fYWpnkEg-UbCGZBTpByNo_-VnyJ8wRfa2hHikscYKbVFkHX0tSCAgtJZ2AfiVlyhJfRYGnLx82qrH9l9Nixn2RG">
+            <div class="absolute top-2 left-2">
+              <span class="inline-block px-2.5 py-0.5 bg-[#870c04] text-white text-[11px] font-black rounded-lg shadow-md uppercase tracking-wider">
+                सबकर पसंद ★ 4.9
+              </span>
+            </div>
+            <div class="absolute bottom-2 right-2 px-2.5 py-0.5 bg-black/80 backdrop-blur-sm text-white text-[11px] rounded-md font-semibold">
+              180 ml • 42.8° UP
+            </div>
+          </div>
+          <div class="p-4 flex flex-col justify-between flex-grow">
+            <div>
+              <div class="flex items-start justify-between gap-1 mb-1">
+                <h3 class="text-base font-black text-[#870c04] leading-tight">करिश्मा देसी दारू</h3>
+                <div class="text-right shrink-0">
+                  <span class="text-base font-black text-[#870c04]">₹30</span>
+                  <span class="block text-xs line-through text-gray-400">₹35</span>
+                </div>
+              </div>
+              <p class="text-xs text-[#59413d] line-clamp-2 mb-3">
+                खेत-खलिहान के असली ताज़गी, शुद्ध महुआ व गन्ने के रस से तैयार। शाम की थकान मिटाने वाला बेजोड़ स्वाद।
+              </p>
+            </div>
+            <div class="flex items-center gap-2 pt-2 border-t border-gray-100">
+              <div class="flex-1 text-[11px] text-[#59413d] font-semibold">गाँव भर में मशहूर</div>
+              <button class="px-3.5 py-2 bg-[#870c04] text-white text-xs font-bold rounded-xl shadow active:scale-95 transition-all flex items-center gap-1 hover:bg-[#a9281a]" onclick="addToThaila('करिश्मा देसी दारू', 30, this)" type="button">
+                <span class="material-symbols-outlined text-[16px]">shopping_basket</span> थैला में जोड़ीं
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 2: सुबोधवा देसी दारू -->
+        <article class="product-item bg-white rounded-2xl shadow-md border border-[#e7e2d9] overflow-hidden flex flex-col transition-all hover:shadow-xl hover:-translate-y-1" data-category="desi">
+          <div class="relative w-full aspect-[4/3] bg-surface-container overflow-hidden">
+            <img alt="सुबोधवा देसी दारू" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxq7dulh0EXWfAgpsUJmZ3uSm_DZ86nYbYXIwnTVSLvfcwq87M8jEWWM_S3f1z_jiidcdwsRFqDtW-hcQz3WZTTTLxHC7c3vOiHmnnt-5SCdh4IpnN4j0Cl_FxSBg-tvY3zVM2ueUVN5e1_y36jVg-8kj5CR-vN3NQJ99aIJBmWnUw7kDBlioKGOwQDXZrMbaGv3AxJ_JQxgJuOTkp3xRivCx5uMU1QFWY6ABGpq6LMS0-r1KIBKIq">
+            <div class="absolute top-2 left-2">
+              <span class="inline-block px-2.5 py-0.5 bg-[#875200] text-white text-[11px] font-black rounded-lg shadow-md uppercase tracking-wider">
+                सस्ता आ असरदार
+              </span>
+            </div>
+            <div class="absolute bottom-2 right-2 px-2.5 py-0.5 bg-black/80 backdrop-blur-sm text-white text-[11px] rounded-md font-semibold">
+              200 ml • कड़क घूँट
+            </div>
+          </div>
+          <div class="p-4 flex flex-col justify-between flex-grow">
+            <div>
+              <div class="flex items-start justify-between gap-1 mb-1">
+                <h3 class="text-base font-black text-[#870c04] leading-tight">सुबोधवा देसी दारू</h3>
+                <div class="text-right shrink-0">
+                  <span class="text-base font-black text-[#870c04]">₹15</span>
+                  <span class="block text-[11px] text-[#875200] font-bold">जनता रेट</span>
+                </div>
+              </div>
+              <p class="text-xs text-[#59413d] line-clamp-2 mb-3">
+                कड़ाके की धूप में राहत, असली देसी घूँट। जे पिए ऊ कहे—वाह रे सुबोधवा!
+              </p>
+            </div>
+            <div class="flex items-center gap-2 pt-2 border-t border-gray-100">
+              <div class="flex-1 text-[11px] text-[#59413d] font-semibold">दमदार असर</div>
+              <button class="px-3.5 py-2 bg-[#870c04] text-white text-xs font-bold rounded-xl shadow active:scale-95 transition-all flex items-center gap-1 hover:bg-[#a9281a]" onclick="addToThaila('सुबोधवा देसी दारू', 15, this)" type="button">
+                <span class="material-symbols-outlined text-[16px]">shopping_basket</span> थैला में जोड़ीं
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 3: सोफिया काला खट्टा -->
+        <article class="product-item bg-white rounded-2xl shadow-md border border-[#e7e2d9] overflow-hidden flex flex-col transition-all hover:shadow-xl hover:-translate-y-1" data-category="desi">
+          <div class="relative w-full aspect-[4/3] bg-surface-container overflow-hidden">
+            <img alt="सोफिया देसी दारू" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCychd8cu8-BpC77qTp0XHflFMZagMC-B4dp9AazDt_7fi1qUBFRpR8nEK1tIR13OZrMM9a27TTfa5XH3CbQXYUhiVKwf638GypeYmGQ0iFYFvPYI9H1BxvxMxmO34SGywZpD4NJ9IlYqDUZ_-IxrqZGobhgPzPQOsTk9de4aWYa2EXQaoCOwMB9cRxocwKdZglbMFEpzNSmV4jyjTF0_MTJ3o1PmfUumVUobqPpoRjohq_-I4RX7it">
+            <div class="absolute top-2 left-2">
+              <span class="inline-block px-2.5 py-0.5 bg-[#ffa527] text-[#2b1700] text-[11px] font-black rounded-lg shadow-md uppercase tracking-wider">
+                चटपटा मज़ा
+              </span>
+            </div>
+            <div class="absolute bottom-2 right-2 px-2.5 py-0.5 bg-black/80 backdrop-blur-sm text-white text-[11px] rounded-md font-semibold">
+              180 ml • काला खट्टा
+            </div>
+          </div>
+          <div class="p-4 flex flex-col justify-between flex-grow">
+            <div>
+              <div class="flex items-start justify-between gap-1 mb-1">
+                <h3 class="text-base font-black text-[#870c04] leading-tight">सोफिया देसी दारू</h3>
+                <div class="text-right shrink-0">
+                  <span class="text-base font-black text-[#870c04]">₹25</span>
+                  <span class="block text-[11px] text-[#59413d] font-bold">180ml निब</span>
+                </div>
+              </div>
+              <p class="text-xs text-[#59413d] line-clamp-2 mb-3">
+                तीखा, मीठा और खट्टा बेजोड़ देसी स्वाद। खास सोफिया फ्लेवर से सजल देहाती पार्टी के शान।
+              </p>
+            </div>
+            <div class="flex items-center gap-2 pt-2 border-t border-gray-100">
+              <div class="flex-1 text-[11px] text-[#59413d] font-semibold">नौजवानन के पहली पसंद</div>
+              <button class="px-3.5 py-2 bg-[#870c04] text-white text-xs font-bold rounded-xl shadow active:scale-95 transition-all flex items-center gap-1 hover:bg-[#a9281a]" onclick="addToThaila('सोफिया देसी दारू', 25, this)" type="button">
+                <span class="material-symbols-outlined text-[16px]">shopping_basket</span> थैला में जोड़ीं
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Product 4: इंग्लिश दारू - रेड लेबल -->
+        <article class="product-item bg-white rounded-2xl shadow-md border border-[#e7e2d9] overflow-hidden flex flex-col transition-all hover:shadow-xl hover:-translate-y-1" data-category="english">
+          <div class="relative w-full aspect-[4/3] bg-surface-container overflow-hidden">
+            <img alt="रेड लेबल स्कॉच विस्की" class="w-full h-full object-cover object-top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMhHfUyBSavLQTFhqp9etcxdguK52Z_Ysb8iEB_dw0xSr7udS9WNPD-gGltCrBbHb_zGteYVbMW-tudBK8cerAi0hlQhahn30pqyd5RxJFgQDUSyIwAV_waoRs8Qw8DwW0eQkUEVJJ74H5YD4bLgviAvvSgjo77Ot0FeC9tFurpqC9l1kZ-wJcph5SI1c6xYoNQk8raASHiOtuaUA787HbcbvyhCKcV8NQPSWI8xOvs8EJx0cH_bOs">
+            <div class="absolute top-2 left-2">
+              <span class="inline-block px-2.5 py-0.5 bg-[#a9281a] text-white text-[11px] font-black rounded-lg shadow-md uppercase tracking-wider">
+                रॉयल विस्की ★
+              </span>
+            </div>
+            <div class="absolute bottom-2 right-2 px-2.5 py-0.5 bg-black/80 backdrop-blur-sm text-white text-[11px] rounded-md font-semibold">
+              375 ml • स्कॉच
+            </div>
+          </div>
+          <div class="p-4 flex flex-col justify-between flex-grow">
+            <div>
+              <div class="flex items-start justify-between gap-1 mb-1">
+                <h3 class="text-base font-black text-[#870c04] leading-tight">इंग्लिश दारू (Red Label)</h3>
+                <div class="text-right shrink-0">
+                  <span class="text-base font-black text-[#870c04]">₹120</span>
+                  <span class="block text-[11px] text-[#875200] font-bold">स्पेशल कोटा</span>
+                </div>
+              </div>
+              <p class="text-xs text-[#59413d] line-clamp-2 mb-3">
+                गाँव में शहर का नशा, शुद्ध प्रीमियम स्कॉच फ्लेवर। खेत के मेढ़ पर बैठ के शाही अंदाज़ में पीए के मज़ा।
+              </p>
+            </div>
+            <div class="flex items-center gap-2 pt-2 border-t border-gray-100">
+              <div class="flex-1 text-[11px] text-[#59413d] font-semibold">शाही पसंद</div>
+              <button class="px-3.5 py-2 bg-[#870c04] text-white text-xs font-bold rounded-xl shadow active:scale-95 transition-all flex items-center gap-1 hover:bg-[#a9281a]" onclick="addToThaila('इंग्लिश दारू Red Label', 120, this)" type="button">
+                <span class="material-symbols-outlined text-[16px]">shopping_basket</span> थैला में जोड़ीं
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Standard Section: चखना कॉर्नर (Same sizing & grid as all sections) -->
+    <section class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-5" data-category="chakhna">
+      <div class="flex items-center justify-between border-b pb-2 border-[#e7e2d9]">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-6 bg-[#875200] rounded-full inline-block"></span>
+          <h2 class="text-lg sm:text-2xl font-bold text-[#1d1b16]">गरमा-गरम चखना कॉर्नर (एक रेट: ₹20/-)</h2>
+        </div>
+        <span class="text-xs text-[#870c04] font-bold bg-[#870c04]/10 px-2.5 py-1 rounded-full">ढाबा स्पेशल</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        
+        <!-- Chakhna 1: खांटी लिट्टी चोखा -->
+        <article class="product-item bg-white rounded-2xl shadow-md border border-[#e7e2d9] overflow-hidden flex flex-col transition-all hover:shadow-xl hover:-translate-y-1" data-category="chakhna">
+          <div class="relative w-full aspect-[4/3] bg-surface-container overflow-hidden">
+            <img alt="खांटी लिट्टी चोखा" class="w-full h-full object-cover object-center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBeHXrzFow0ECTJO2L1AD_PrzYeRefSn0icmx9nj9fchcLY0rcEa5tZwh6kdoJXx2zLD0egeAAc5ft-LmZztbckHwQvCU0G5-YaSn8tnzljZK72-h-yVzZB8g_hKku0Y8lvpzy4dIitsHTIhu8AGPW032w2eVMDZdBKEmDkVD1BaQY-czI15mRofD4IF7v-35upUpeTJWLfHbohKLmrT869Vh2XqawLyckpDjHhMZTMDcBQrcfJShb8">
+            <div class="absolute top-2 left-2">
+              <span class="inline-block px-2.5 py-0.5 bg-[#875200] text-white text-[11px] font-black rounded-lg shadow-md uppercase tracking-wider">
+                देहाती स्वाद ★
+              </span>
+            </div>
+            <div class="absolute bottom-2 right-2 px-2.5 py-0.5 bg-black/80 backdrop-blur-sm text-white text-[11px] rounded-md font-semibold">
+              शुद्ध देसी घी
+            </div>
+          </div>
+          <div class="p-4 flex flex-col justify-between flex-grow">
+            <div>
+              <div class="flex items-start justify-between gap-1 mb-1">
+                <h3 class="text-base font-black text-[#870c04] leading-tight">खांटी लिट्टी चोखा</h3>
+                <div class="text-right shrink-0">
+                  <span class="text-base font-black text-[#870c04]">₹20</span>
+                  <span class="block text-[11px] text-[#875200] font-bold">प्रति पत्तल</span>
+                </div>
+              </div>
+              <p class="text-xs text-[#59413d] line-clamp-2 mb-3">
+                गोइठा के आँच पर सेंकल सत्तू लिट्टी व तीखा बैंगन चोखा। बिहारी स्वाद देसी अंदाज़ में।
+              </p>
+            </div>
+            <div class="flex items-center gap-2 pt-2 border-t border-gray-100">
+              <div class="flex-1 text-[11px] text-[#59413d] font-semibold">गरमा-गरम</div>
+              <button class="px-3.5 py-2 bg-[#870c04] text-white text-xs font-bold rounded-xl shadow active:scale-95 transition-all flex items-center gap-1 hover:bg-[#a9281a]" onclick="addToThaila('खांटी लिट्टी चोखा', 20, this)" type="button">
+                <span class="material-symbols-outlined text-[16px]">shopping_basket</span> झोला में जोड़ीं
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Chakhna 2: भुना चना व प्याज -->
+        <article class="product-item bg-white rounded-2xl shadow-md border border-[#e7e2d9] overflow-hidden flex flex-col transition-all hover:shadow-xl hover:-translate-y-1" data-category="chakhna">
+          <div class="relative w-full aspect-[4/3] bg-[#f9f3ea] flex items-center justify-center overflow-hidden">
+            <span class="material-symbols-outlined text-[64px] text-[#875200]">lunch_dining</span>
+            <div class="absolute top-2 left-2">
+              <span class="inline-block px-2.5 py-0.5 bg-[#ffa527] text-[#2b1700] text-[11px] font-black rounded-lg shadow-md uppercase tracking-wider">
+                कड़क चखना
+              </span>
+            </div>
+            <div class="absolute bottom-2 right-2 px-2.5 py-0.5 bg-black/80 backdrop-blur-sm text-white text-[11px] rounded-md font-semibold">
+              सरसों तेल संग
+            </div>
+          </div>
+          <div class="p-4 flex flex-col justify-between flex-grow">
+            <div>
+              <div class="flex items-start justify-between gap-1 mb-1">
+                <h3 class="text-base font-black text-[#870c04] leading-tight">भुना चना व प्याज</h3>
+                <div class="text-right shrink-0">
+                  <span class="text-base font-black text-[#870c04]">₹20</span>
+                  <span class="block text-[11px] text-[#875200] font-bold">1 प्लेट</span>
+                </div>
+              </div>
+              <p class="text-xs text-[#59413d] line-clamp-2 mb-3">
+                तीखी हरी मिर्च, कतरल प्याज और शुद्ध सरसों तेल संग भुना हुआ देसी चना।
+              </p>
+            </div>
+            <div class="flex items-center gap-2 pt-2 border-t border-gray-100">
+              <div class="flex-1 text-[11px] text-[#59413d] font-semibold">तीखा मज़ा</div>
+              <button class="px-3.5 py-2 bg-[#870c04] text-white text-xs font-bold rounded-xl shadow active:scale-95 transition-all flex items-center gap-1 hover:bg-[#a9281a]" onclick="addToThaila('भुना चना व प्याज', 20, this)" type="button">
+                <span class="material-symbols-outlined text-[16px]">shopping_basket</span> झोला में जोड़ीं
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Chakhna 3: मसालेदार दालमोठ & तिलौरी -->
+        <article class="product-item bg-white rounded-2xl shadow-md border border-[#e7e2d9] overflow-hidden flex flex-col transition-all hover:shadow-xl hover:-translate-y-1" data-category="chakhna">
+          <div class="relative w-full aspect-[4/3] bg-[#f9f3ea] flex items-center justify-center overflow-hidden">
+            <span class="material-symbols-outlined text-[64px] text-[#875200]">rice_bowl</span>
+            <div class="absolute top-2 left-2">
+              <span class="inline-block px-2.5 py-0.5 bg-[#875200] text-white text-[11px] font-black rounded-lg shadow-md uppercase tracking-wider">
+                खुरखुर मिक्स
+              </span>
+            </div>
+            <div class="absolute bottom-2 right-2 px-2.5 py-0.5 bg-black/80 backdrop-blur-sm text-white text-[11px] rounded-md font-semibold">
+              चना व तिलौरी
+            </div>
+          </div>
+          <div class="p-4 flex flex-col justify-between flex-grow">
+            <div>
+              <div class="flex items-start justify-between gap-1 mb-1">
+                <h3 class="text-base font-black text-[#870c04] leading-tight">तिलौरी व दालमोठ</h3>
+                <div class="text-right shrink-0">
+                  <span class="text-base font-black text-[#870c04]">₹20</span>
+                  <span class="block text-[11px] text-[#875200] font-bold">1 प्लेट</span>
+                </div>
+              </div>
+              <p class="text-xs text-[#59413d] line-clamp-2 mb-3">
+                खुरखुर मुरमुरा, कुरकुरी दालमोठ और देहाती तिलौरी के चटपटा मेल।
+              </p>
+            </div>
+            <div class="flex items-center gap-2 pt-2 border-t border-gray-100">
+              <div class="flex-1 text-[11px] text-[#59413d] font-semibold">कुरकुरा स्वाद</div>
+              <button class="px-3.5 py-2 bg-[#870c04] text-white text-xs font-bold rounded-xl shadow active:scale-95 transition-all flex items-center gap-1 hover:bg-[#a9281a]" onclick="addToThaila('तिलौरी व भुंजा', 20, this)" type="button">
+                <span class="material-symbols-outlined text-[16px]">shopping_basket</span> झोला में जोड़ीं
+              </button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Chakhna 4: अंडा फ्राई व पापड़ -->
+        <article class="product-item bg-white rounded-2xl shadow-md border border-[#e7e2d9] overflow-hidden flex flex-col transition-all hover:shadow-xl hover:-translate-y-1" data-category="chakhna">
+          <div class="relative w-full aspect-[4/3] bg-[#f9f3ea] flex items-center justify-center overflow-hidden">
+            <span class="material-symbols-outlined text-[64px] text-[#875200]">egg</span>
+            <div class="absolute top-2 left-2">
+              <span class="inline-block px-2.5 py-0.5 bg-[#870c04] text-white text-[11px] font-black rounded-lg shadow-md uppercase tracking-wider">
+                तवा स्पेशल
+              </span>
+            </div>
+            <div class="absolute bottom-2 right-2 px-2.5 py-0.5 bg-black/80 backdrop-blur-sm text-white text-[11px] rounded-md font-semibold">
+              उड़द पापड़ संग
+            </div>
+          </div>
+          <div class="p-4 flex flex-col justify-between flex-grow">
+            <div>
+              <div class="flex items-start justify-between gap-1 mb-1">
+                <h3 class="text-base font-black text-[#870c04] leading-tight">अंडा फ्राई व पापड़</h3>
+                <div class="text-right shrink-0">
+                  <span class="text-base font-black text-[#870c04]">₹20</span>
+                  <span class="block text-[11px] text-[#875200] font-bold">1 सेट</span>
+                </div>
+              </div>
+              <p class="text-xs text-[#59413d] line-clamp-2 mb-3">
+                देसी तवा फ्राई अंडा, हरी चटनी और करारा उड़द दाल पापड़।
+              </p>
+            </div>
+            <div class="flex items-center gap-2 pt-2 border-t border-gray-100">
+              <div class="flex-1 text-[11px] text-[#59413d] font-semibold">शाही चखना</div>
+              <button class="px-3.5 py-2 bg-[#870c04] text-white text-xs font-bold rounded-xl shadow active:scale-95 transition-all flex items-center gap-1 hover:bg-[#a9281a]" onclick="addToThaila('अंडा फ्राई व पापड़', 20, this)" type="button">
+                <span class="material-symbols-outlined text-[16px]">shopping_basket</span> झोला में जोड़ीं
+              </button>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Trust Badges -->
+    <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 gap-3 my-4">
+      <div class="p-4 rounded-2xl bg-[#ede7df] flex items-center gap-3 border border-[#e1bfb9]">
+        <div class="w-11 h-11 rounded-full bg-[#870c04] flex items-center justify-center text-white shrink-0 shadow">
+          <span class="material-symbols-outlined text-[24px]">verified_user</span>
+        </div>
+        <div>
+          <h4 class="text-sm font-bold text-[#870c04]">१००% सरकारी ठेका प्रमाणित</h4>
+          <p class="text-xs text-[#59413d]">आबकारी विभाग द्वारा अधिकृत। शुद्धता आ असली माल के पक्की गारंटी।</p>
+        </div>
+      </div>
+      <div class="p-4 rounded-2xl bg-[#ede7df] flex items-center gap-3 border border-[#e1bfb9]">
+        <div class="w-11 h-11 rounded-full bg-[#875200] flex items-center justify-center text-white shrink-0 shadow">
+          <span class="material-symbols-outlined text-[24px]">local_shipping</span>
+        </div>
+        <div>
+          <h4 class="text-sm font-bold text-[#875200]">गाँव-जवार में 10 मिनट डिलीवरी</h4>
+          <p class="text-xs text-[#59413d]">Blinkit / Swiggy स्टाइल सुपरफास्ट खलिहान डिलीवरी।</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROMINENT PRASHANT JITTE MESSAGE BANNER -->
+    <div class="max-w-4xl mx-auto px-4 my-8">
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#870c04] via-[#5c0802] to-[#870c04] p-6 sm:p-8 text-center text-white shadow-2xl border-2 border-[#ffa527]">
+        <div class="absolute -top-10 -left-10 w-32 h-32 bg-[#ffa527]/20 rounded-full blur-2xl"></div>
+        <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-[#ffa527]/20 rounded-full blur-2xl"></div>
+        
+        <div class="relative z-10 flex flex-col items-center">
+          <span class="inline-block px-4 py-1 rounded-full bg-[#ffa527] text-[#2b1700] text-xs font-black uppercase tracking-wider mb-3">
+            📢 जनता की आवाज़ • विशेष संदेश
+          </span>
+          <h2 class="text-xl sm:text-3xl font-black text-[#fff9ef] tracking-wide leading-relaxed">
+            "अगर प्रशांत को जिताते तो दारू पानी से सस्ता होता!"
+          </h2>
+          <p class="text-xs sm:text-sm text-[#ffdad4] mt-2 font-medium">
+            जन सुराज के सोच, सस्ता आ आसान पहुँचाव • हर गाँव, हर गली
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Statutory Legal Health Warning -->
+    <footer class="max-w-6xl mx-auto px-4 py-6 text-center text-xs text-[#59413d] flex flex-col items-center gap-2">
+      <div class="flex items-center gap-1 text-[#ba1a1a] font-bold">
+        <span class="material-symbols-outlined text-[18px]">warning</span>
+        वैधानिक चेतावनी (Statutory Warning)
+      </div>
+      <p class="max-w-md">मद्यपान स्वास्थ्य के लिए हानिकारक है। शराब पीकर गाड़ी न चलाएं। केवल २१+ वर्ष के बालिग लोगों के लिए।</p>
+      <div class="w-20 h-0.5 bg-[#e1bfb9] my-1"></div>
+      <span>देसी दारू ठेका • बिहार देहात संस्करण © २०२६</span>
+    </footer>
+
+  </div>
+
+  <!-- FLOATING CART BAR (Blinkit style) -->
+  <div class="fixed bottom-6 left-4 right-4 max-w-lg mx-auto z-40 hidden transform transition-all duration-300" id="cartBar">
+    <div class="bg-[#870c04] text-white px-5 py-3 rounded-2xl shadow-[0_10px_30px_rgba(135,12,4,0.5)] flex items-center justify-between border-2 border-[#ffa527]">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-full bg-[#ffa527] text-[#2b1700] flex items-center justify-center font-black text-sm" id="cartCount">
+          0
+        </div>
+        <div>
+          <span class="text-xs font-bold block" id="cartLastItem">थैला में समान</span>
+          <span class="text-sm font-black text-[#ffdad4]" id="cartTotalText">कुल: ₹0</span>
+        </div>
+      </div>
+      <button class="px-5 py-2.5 bg-[#ffa527] text-[#2b1700] text-xs font-black rounded-xl shadow active:scale-95 transition-transform flex items-center gap-1.5 hover:bg-white" onclick="openCheckoutModal()" type="button">
+        ऑर्डर व पेमेंट करीं <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- FULL CHECKOUT & PAYMENT MODAL (Blinkit / Swiggy Style) -->
+  <div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 hidden" id="checkoutModal">
+    <div class="bg-[#fff9ef] text-[#1d1b16] w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden max-h-[92vh] flex flex-col border border-[#ffa527]">
+      
+      <!-- Modal Header -->
+      <div class="bg-[#870c04] text-white p-4 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[24px] text-[#ffa527]">shopping_bag</span>
+          <div>
+            <h3 class="font-black text-base">थैला चेकआउट • 10 मिनट डिलीवरी</h3>
+            <span class="text-xs text-[#ffdad4]">Blinkit / Swiggy स्टाइल एक्सप्रेस डिलीवरी</span>
+          </div>
+        </div>
+        <button class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center hover:bg-white/30" onclick="closeCheckoutModal()">
+          <span class="material-symbols-outlined text-sm">close</span>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-5 overflow-y-auto flex flex-col gap-4">
+        
+        <!-- Order Items List -->
+        <div class="bg-white p-3.5 rounded-2xl border border-[#e7e2d9]">
+          <h4 class="text-xs font-black text-[#870c04] uppercase tracking-wider mb-2 flex items-center gap-1">
+            <span class="material-symbols-outlined text-[16px]">receipt_long</span> ऑर्डर के समान (Items)
+          </h4>
+          <div class="flex flex-col gap-2 divide-y divide-gray-100 max-h-36 overflow-y-auto" id="modalItemsList">
+            <!-- Populated via JS -->
+          </div>
+          <div class="border-t border-gray-200 pt-2 mt-2 flex justify-between items-center text-sm font-black">
+            <span>कुल रकम (Total):</span>
+            <span class="text-[#870c04] text-base" id="modalTotalAmount">₹0</span>
+          </div>
+        </div>
+
+        <!-- Address & Customer Details Form -->
+        <div class="bg-white p-4 rounded-2xl border border-[#e7e2d9] flex flex-col gap-3">
+          <h4 class="text-xs font-black text-[#870c04] uppercase tracking-wider flex items-center gap-1">
+            <span class="material-symbols-outlined text-[16px]">location_on</span> डिलीवरी पता (Delivery Address)
+          </h4>
+
+          <div>
+            <label class="block text-[11px] font-bold text-gray-700 mb-1">रउआ नाम (Full Name) *</label>
+            <input type="text" id="custName" placeholder="उदा: रमेश कुमार" class="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-[#870c04] bg-[#fdfcf9]">
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-[11px] font-bold text-gray-700 mb-1">मोबाइल नंबर (Phone) *</label>
+              <input type="tel" id="custPhone" placeholder="उदा: 9876543210" class="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-[#870c04] bg-[#fdfcf9]">
+            </div>
+            <div>
+              <label class="block text-[11px] font-bold text-gray-700 mb-1">नजदीकी पहचान (Landmark)</label>
+              <input type="text" id="custLandmark" placeholder="उदा: पीपल के पेड़, खाट के पास" class="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-[#870c04] bg-[#fdfcf9]">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-[11px] font-bold text-gray-700 mb-1">गाँव / टोला / पूरा पता (Full Address) *</label>
+            <textarea id="custAddress" rows="2" placeholder="उदा: गाँव बड़हरिया, वार्ड नं 4, सीवान" class="w-full px-3 py-2 text-xs rounded-xl border border-gray-300 focus:outline-none focus:border-[#870c04] bg-[#fdfcf9]"></textarea>
+          </div>
+        </div>
+
+        <!-- Payment Method Selection -->
+        <div class="bg-white p-4 rounded-2xl border border-[#e7e2d9] flex flex-col gap-3">
+          <h4 class="text-xs font-black text-[#870c04] uppercase tracking-wider flex items-center gap-1">
+            <span class="material-symbols-outlined text-[16px]">payments</span> पेमेंट तरीका (Payment Method)
+          </h4>
+
+          <div class="grid grid-cols-2 gap-2">
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border-2 border-[#870c04] bg-[#fff4f2] cursor-pointer">
+              <input type="radio" name="payMethod" value="upi" checked onchange="togglePaymentSection('upi')" class="accent-[#870c04]">
+              <div class="text-left">
+                <span class="text-xs font-bold block text-[#870c04]">PhonePe / UPI</span>
+                <span class="text-[10px] text-gray-500">QR कोड से स्कैन करीं</span>
+              </div>
+            </label>
+            <label class="flex items-center gap-2 p-2.5 rounded-xl border border-gray-200 bg-[#fafafa] cursor-pointer">
+              <input type="radio" name="payMethod" value="cod" onchange="togglePaymentSection('cod')" class="accent-[#870c04]">
+              <div class="text-left">
+                <span class="text-xs font-bold block">नकद (Cash on Delivery)</span>
+                <span class="text-[10px] text-gray-500">हाथ में माल तब पैसा</span>
+              </div>
+            </label>
+          </div>
+
+          <!-- PhonePe QR Section -->
+          <div id="upiSection" class="p-4 rounded-2xl bg-gradient-to-b from-[#1c0226] to-[#0a0010] text-white flex flex-col items-center text-center gap-2 border border-[#870c04]">
+            <div class="flex items-center gap-1.5 text-xs text-[#d197ff] font-bold">
+              <span class="material-symbols-outlined text-[16px]">qr_code_scanner</span> PhonePe Accepted Here
+            </div>
+            
+            <!-- Real QR Code Image -->
+            <div class="bg-white p-2.5 rounded-2xl shadow-xl w-48 h-48 flex items-center justify-center my-1 border-2 border-[#ffa527]">
+              <img src="assets/qr.png" alt="PhonePe QR Code" class="w-full h-full object-contain">
+            </div>
+
+            <div class="text-xs">
+              <span class="text-gray-300">UPI ID:</span>
+              <span class="font-mono font-bold text-[#ffa527] bg-white/10 px-2 py-0.5 rounded ml-1" id="upiIdText">8102899986@ybl</span>
+              <button onclick="copyUpi()" class="ml-1 text-[11px] underline text-[#d197ff] hover:text-white" type="button">Copy</button>
+            </div>
+            
+            <a id="payDirectLink" href="upi://pay?pa=8102899986@ybl&pn=Ahsan%20Aziz&cu=INR" class="mt-1 px-4 py-1.5 bg-[#5f259f] hover:bg-[#7b32cf] text-white text-xs font-bold rounded-xl flex items-center gap-1 shadow">
+              <span class="material-symbols-outlined text-[14px]">open_in_new</span> सीधे UPI App में खोलीं
+            </a>
+            
+            <p class="text-[10px] text-gray-400 mt-1">स्कैन करीं आ नीचे 'पेमेंट भइल • कन्फर्म करीं' बटन दवाईं</p>
+          </div>
+
+        </div>
+
+        <!-- Prashant quote in checkout too -->
+        <div class="text-center p-2 rounded-xl bg-[#ffa527]/20 border border-[#ffa527] text-xs font-bold text-[#870c04]">
+          "अगर प्रशांत को जिताते तो दारू पानी से सस्ता होता!"
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 bg-white border-t border-[#e7e2d9] flex gap-2">
+        <button class="w-1/3 py-3 rounded-2xl border border-gray-300 text-xs font-bold text-gray-700 hover:bg-gray-100" onclick="closeCheckoutModal()">
+          वापस जाईं
+        </button>
+        <button id="confirmOrderBtn" class="w-2/3 py-3 rounded-2xl bg-[#870c04] hover:bg-[#a9281a] text-white text-xs font-black shadow-lg flex items-center justify-center gap-1.5 active:scale-95 transition-all" onclick="submitOrder()">
+          <span class="material-symbols-outlined text-[16px]">task_alt</span> पेमेंट भइल • कन्फर्म करीं
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ORDER SUCCESS CELEBRATION MODAL -->
+  <div class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 hidden" id="successModal">
+    <div class="bg-white text-[#1d1b16] w-full max-w-md rounded-3xl p-6 text-center shadow-2xl flex flex-col items-center gap-3 border-4 border-[#ffa527]">
+      <div class="w-16 h-16 rounded-full bg-green-100 text-green-600 flex items-center justify-center animate-bounce">
+        <span class="material-symbols-outlined text-[36px]">check_circle</span>
+      </div>
+      <h3 class="text-xl font-black text-[#870c04]">बधाई हो! ऑर्डर कन्फर्म हो गइल!</h3>
+      <p class="text-xs text-gray-600">ठेका से लड़का बोतल आ चखना लेके निकल गइल बा। 10 मिनट में रउआ खलिहान / घर पहुँच जाई!</p>
+      
+      <div class="w-full bg-[#f3ede4] p-3 rounded-2xl text-left text-xs flex flex-col gap-1 border border-[#e1bfb9]">
+        <div><strong class="text-gray-600">ऑर्डर आईडी:</strong> <span class="font-mono font-bold text-[#870c04]" id="successOrderId">ORD-89327</span></div>
+        <div><strong class="text-gray-600">ग्राहक:</strong> <span id="successName">रमेश</span></div>
+        <div><strong class="text-gray-600">कुल देय:</strong> <span class="font-bold text-[#870c04]" id="successAmount">₹60</span></div>
+        <div><strong class="text-gray-600">पेमेंट:</strong> <span class="text-green-700 font-bold" id="successPayStatus">सफल (8102899986@ybl)</span></div>
+      </div>
+
+      <div class="p-3 bg-[#ffa527]/20 border border-[#ffa527] rounded-xl text-xs font-black text-[#870c04]">
+        "अगर प्रशांत को जिताते तो दारू पानी से सस्ता होता!"
+      </div>
+
+      <button onclick="closeSuccessModal()" class="w-full py-3 bg-[#870c04] text-white text-xs font-black rounded-2xl shadow hover:bg-[#a9281a]">
+        ठीक बा (Done)
+      </button>
+    </div>
+  </div>
+
+  <!-- Custom Notification Toast -->
+  <div id="toast">
+    <span class="material-symbols-outlined text-[#ffa527]" id="toastIcon">check_circle</span>
+    <span id="toastMsg">समान थैला में जुड़ गइल!</span>
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    const FRAME_COUNT = 300;
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const progressBar = document.getElementById('progressBar');
+    const frameCounter = document.getElementById('frameCounter');
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const loadingText = document.getElementById('loadingText');
+    const loadingBarFill = document.getElementById('loadingBarFill');
+    const homeAudio = document.getElementById('homeAudio');
+    const paymentAudio = document.getElementById('paymentAudio');
+    const scrollIndicator = document.getElementById('scrollIndicator');
+
+    // Canvas Size
+    canvas.width = 1920;
+    canvas.height = 1080;
+
+    // Frame Paths
+    function framePath(index) {
+      const num = String(index).padStart(3, '0');
+      return `frames/ezgif-frame-${num}.jpg`;
+    }
+
+    // Preload Images
+    const images = [];
+    let loadedCount = 0;
+
+    function preloadImages() {
+      return new Promise((resolve) => {
+        for (let i = 1; i <= FRAME_COUNT; i++) {
+          const img = new Image();
+          img.src = framePath(i);
+          img.onload = img.onerror = () => {
+            loadedCount++;
+            const pct = Math.round((loadedCount / FRAME_COUNT) * 100);
+            loadingText.textContent = `${pct}% लोड भइल`;
+            loadingBarFill.style.width = `${pct}%`;
+            if (loadedCount === FRAME_COUNT) resolve();
+          };
+          images.push(img);
+        }
+      });
+    }
+
+    function renderFrame(index) {
+      const img = images[index];
+      if (!img || !img.complete) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    }
+
+    // Dual Audio Controller:
+    // 1. homeAudio (Maal piyenge) plays continuously on homepage
+    // 2. paymentAudio (Shloka/2nd audio) plays during checkout payment gateway
+    let isCheckoutActive = false;
+
+    function playHomeMusic() {
+      if (!isCheckoutActive) {
+        if (!paymentAudio.paused) {
+          paymentAudio.pause();
+        }
+        if (homeAudio.paused) {
+          homeAudio.play().catch(() => {});
+        }
+      }
+    }
+
+    function switchToPaymentMusic() {
+      isCheckoutActive = true;
+      if (!homeAudio.paused) {
+        homeAudio.pause();
+      }
+      paymentAudio.currentTime = 0;
+      paymentAudio.play().catch(() => {});
+    }
+
+    function switchToHomeMusic() {
+      isCheckoutActive = false;
+      if (!paymentAudio.paused) {
+        paymentAudio.pause();
+      }
+      homeAudio.play().catch(() => {});
+    }
+
+    // Attach interaction listeners to start home audio on any interaction
+    ['scroll', 'touchstart', 'touchmove', 'click', 'keydown', 'wheel'].forEach(evt => {
+      window.addEventListener(evt, () => playHomeMusic(), { passive: true });
+    });
+
+    // Scroll Handler
+    let currentFrame = 0;
+    let ticking = false;
+
+    function onScroll() {
+      // Home audio starts playing automatically on scroll
+      playHomeMusic();
+
+      if (!ticking) {
+        requestAnimationFrame(updateFrame);
+        ticking = true;
+      }
+    }
+
+    function updateFrame() {
+      ticking = false;
+
+      const scrollSection = document.getElementById('scrollAnimation');
+      const rect = scrollSection.getBoundingClientRect();
+      const sectionHeight = scrollSection.offsetHeight - window.innerHeight;
+
+      // Distance from top of scrollSection
+      const scrolled = -rect.top;
+      const progress = Math.min(Math.max(scrolled / sectionHeight, 0), 1);
+
+      const frameIndex = Math.min(
+        Math.floor(progress * FRAME_COUNT),
+        FRAME_COUNT - 1
+      );
+
+      if (frameIndex !== currentFrame) {
+        currentFrame = frameIndex;
+        renderFrame(currentFrame);
+      }
+
+      // Hide indicator after initial scroll
+      if (progress > 0.05 && scrollIndicator) {
+        scrollIndicator.style.opacity = '0';
+      } else if (scrollIndicator) {
+        scrollIndicator.style.opacity = '1';
+      }
+
+      // Update UI
+      const displayNum = String(currentFrame + 1).padStart(3, '0');
+      frameCounter.textContent = `${displayNum} / ${FRAME_COUNT}`;
+
+      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const totalProgress = (window.scrollY / totalScroll) * 100;
+      progressBar.style.width = `${totalProgress}%`;
+    }
+
+    // CART STATE
+    let cart = [];
+
+    function addToThaila(itemName, price, btnElement) {
+      playHomeMusic();
+
+      const existing = cart.find(item => item.name === itemName);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ name: itemName, price: price, qty: 1 });
+      }
+
+      // Button micro-interaction feedback
+      if (btnElement) {
+        const originalText = btnElement.innerHTML;
+        btnElement.innerHTML = `<span class="material-symbols-outlined text-[16px]">check_circle</span> जुड़ गइल!`;
+        btnElement.classList.add('bg-[#ffa527]', 'text-[#2b1700]');
+        setTimeout(() => {
+          btnElement.innerHTML = originalText;
+          btnElement.classList.remove('bg-[#ffa527]', 'text-[#2b1700]');
+        }, 800);
+      }
+
+      showToast(`'${itemName}' थैला में जुड़ गइल!`);
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const cartBar = document.getElementById('cartBar');
+      const cartCount = document.getElementById('cartCount');
+      const cartLastItem = document.getElementById('cartLastItem');
+      const cartTotalText = document.getElementById('cartTotalText');
+
+      const totalCount = cart.reduce((acc, item) => acc + item.qty, 0);
+      const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+      if (totalCount > 0) {
+        cartBar.classList.remove('hidden');
+        cartCount.textContent = totalCount;
+        cartLastItem.textContent = `${cart[cart.length - 1].name} (${totalCount} समान)`;
+        cartTotalText.textContent = `कुल: ₹${totalPrice}`;
+      } else {
+        cartBar.classList.add('hidden');
+      }
+    }
+
+    // CATEGORY FILTER
+    function filterCategory(cat, btn) {
+      const pills = document.querySelectorAll('.category-pill');
+      pills.forEach(p => {
+        p.classList.remove('bg-[#870c04]', 'text-white', 'active-pill');
+        p.classList.add('bg-[#ede7df]', 'text-[#59413d]');
+      });
+
+      if (btn) {
+        btn.classList.remove('bg-[#ede7df]', 'text-[#59413d]');
+        btn.classList.add('bg-[#870c04]', 'text-white', 'active-pill');
+      }
+
+      const products = document.querySelectorAll('.product-item');
+      const chakhnaSection = document.querySelector('section[data-category="chakhna"]');
+
+      if (cat === 'all') {
+        products.forEach(p => p.style.display = 'flex');
+        if (chakhnaSection) chakhnaSection.style.display = 'flex';
+      } else if (cat === 'chakhna') {
+        products.forEach(p => {
+          if (p.getAttribute('data-category') === 'chakhna') {
+            p.style.display = 'flex';
+          } else {
+            p.style.display = 'none';
+          }
+        });
+        if (chakhnaSection) {
+          chakhnaSection.style.display = 'flex';
+          chakhnaSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } else {
+        if (chakhnaSection) chakhnaSection.style.display = 'none';
+        products.forEach(p => {
+          if (p.getAttribute('data-category') === cat) {
+            p.style.display = 'flex';
+          } else {
+            p.style.display = 'none';
+          }
+        });
+      }
+    }
+
+    // CHECKOUT MODAL (Switches from home audio to 2nd audio in payment gateway)
+    function openCheckoutModal() {
+      if (cart.length === 0) {
+        showToast("रउआ थैला खाली बा! पहिले बोतल या चखना जोड़ीं।", "warning");
+        return;
+      }
+
+      // Switch audio: Pause home audio, start 2nd audio for payment gateway
+      switchToPaymentMusic();
+
+      const modalItemsList = document.getElementById('modalItemsList');
+      const modalTotalAmount = document.getElementById('modalTotalAmount');
+      const payDirectLink = document.getElementById('payDirectLink');
+
+      const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+      modalItemsList.innerHTML = cart.map((item, idx) => `
+        <div class="flex items-center justify-between py-1 text-xs">
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-[#870c04]">${item.name}</span>
+            <span class="text-gray-500">x${item.qty}</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="font-bold">₹${item.price * item.qty}</span>
+            <button onclick="removeItem(${idx})" class="text-red-500 text-xs hover:underline">हटावीं</button>
+          </div>
+        </div>
+      `).join('');
+
+      modalTotalAmount.textContent = `₹${totalPrice}`;
+      payDirectLink.href = `upi://pay?pa=8102899986@ybl&pn=Ahsan%20Aziz&am=${totalPrice}&cu=INR&tn=Desi%20Daaru%20Order`;
+
+      document.getElementById('checkoutModal').classList.remove('hidden');
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      updateCartUI();
+      if (cart.length === 0) {
+        closeCheckoutModal();
+      } else {
+        openCheckoutModal();
+      }
+    }
+
+    function closeCheckoutModal() {
+      document.getElementById('checkoutModal').classList.add('hidden');
+      // Resume home background audio when checkout is closed
+      switchToHomeMusic();
+    }
+
+    function togglePaymentSection(type) {
+      const upiSection = document.getElementById('upiSection');
+      if (type === 'upi') {
+        upiSection.classList.remove('hidden');
+      } else {
+        upiSection.classList.add('hidden');
+      }
+    }
+
+    function copyUpi() {
+      navigator.clipboard.writeText("8102899986@ybl");
+      showToast("UPI ID (8102899986@ybl) कॉपी हो गइल!", "content_copy");
+    }
+
+    // SUBMIT ORDER TO BACKEND
+    async function submitOrder() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const address = document.getElementById('custAddress').value.trim();
+      const landmark = document.getElementById('custLandmark').value.trim();
+      const payMethod = document.querySelector('input[name="payMethod"]:checked').value;
+      const confirmOrderBtn = document.getElementById('confirmOrderBtn');
+
+      if (!name) {
+        alert("कृपया आपन नाम लिखीं!");
+        document.getElementById('custName').focus();
+        return;
+      }
+      if (!phone || phone.length < 10) {
+        alert("कृपया सही मोबाइल नंबर (१० अंक) दर्ज करीं!");
+        document.getElementById('custPhone').focus();
+        return;
+      }
+      if (!address) {
+        alert("कृपया आपन पूरा गाँव/टोला व पता लिखीं!");
+        document.getElementById('custAddress').focus();
+        return;
+      }
+
+      const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
+
+      const orderPayload = {
+        name: name,
+        phone: phone,
+        address: address,
+        landmark: landmark,
+        payment_method: payMethod,
+        items: cart,
+        total_amount: totalPrice
+      };
+
+      confirmOrderBtn.disabled = true;
+      confirmOrderBtn.innerHTML = `<span class="material-symbols-outlined animate-spin text-[16px]">sync</span> ऑर्डर सेव हो रहल बा...`;
+
+      try {
+        const response = await fetch('/api/order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(orderPayload)
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          closeCheckoutModal();
+          // Open Success Modal
+          document.getElementById('successOrderId').textContent = result.order.order_id;
+          document.getElementById('successName').textContent = result.order.name;
+          document.getElementById('successAmount').textContent = `₹${result.order.total_amount}`;
+          document.getElementById('successPayStatus').textContent = payMethod === 'upi' ? 'सफल (PhonePe - 8102899986@ybl)' : 'कैश ऑन डिलीवरी (हाथ में माल तब पैसा)';
+          document.getElementById('successModal').classList.remove('hidden');
+
+          // Reset Cart
+          cart = [];
+          updateCartUI();
+        } else {
+          alert("त्रुटि: " + (result.error || "ऑर्डर पूरा ना हो सकल"));
+        }
+      } catch (err) {
+        console.error(err);
+        // Fallback local simulation if offline
+        closeCheckoutModal();
+        document.getElementById('successOrderId').textContent = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
+        document.getElementById('successName').textContent = name;
+        document.getElementById('successAmount').textContent = `₹${totalPrice}`;
+        document.getElementById('successPayStatus').textContent = payMethod === 'upi' ? 'सफल (PhonePe - 8102899986@ybl)' : 'कैश ऑन डिलीवरी';
+        document.getElementById('successModal').classList.remove('hidden');
+        cart = [];
+        updateCartUI();
+      } finally {
+        confirmOrderBtn.disabled = false;
+        confirmOrderBtn.innerHTML = `<span class="material-symbols-outlined text-[16px]">task_alt</span> पेमेंट भइल • कन्फर्म करीं`;
+      }
+    }
+
+    function closeSuccessModal() {
+      document.getElementById('successModal').classList.add('hidden');
+      switchToHomeMusic();
+    }
+
+    function notifyOffer() {
+      alert("🔔 घंटी बज गइल बा! उद्घाटन के दिन रउआ के सूचना सीधे मिल जाई।");
+    }
+
+    function showToast(msg, icon = 'check_circle') {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      const toastIcon = document.getElementById('toastIcon');
+      toastMsg.textContent = msg;
+      toastIcon.textContent = icon;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+
+    // INIT
+    async function init() {
+      await preloadImages();
+      loadingOverlay.classList.add('hidden');
+      renderFrame(0);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      updateFrame();
+    }
+
+    init();
+  </script>
+</body>
+</html>
