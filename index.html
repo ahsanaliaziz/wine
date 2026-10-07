@@ -182,37 +182,7 @@
       pointer-events: none;
     }
 
-    /* Loading Overlay */
-    .loading-overlay {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      z-index: 1000;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 20px;
-      transition: opacity 0.5s ease;
-    }
-    .loading-overlay.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-    .loading-bar-track {
-      width: 220px;
-      height: 4px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .loading-bar-fill {
-      height: 100%;
-      background: #ffa527;
-      border-radius: 2px;
-      width: 0%;
-      transition: width 0.1s linear;
-    }
+
 
     /* Custom Toast */
     #toast {
@@ -251,17 +221,7 @@
     <source src="assets/bg_music.mp3" type="audio/mpeg">
   </audio>
 
-  <!-- Loading Overlay -->
-  <div class="loading-overlay" id="loadingOverlay">
-    <div class="text-xl font-bold text-[#ffa527] flex items-center gap-2">
-      <span class="material-symbols-outlined">liquor</span>
-      देसी दारू ठेका लोड हो रहल बा...
-    </div>
-    <div class="text-sm text-gray-400" id="loadingText">0% लोड भइल</div>
-    <div class="loading-bar-track">
-      <div class="loading-bar-fill" id="loadingBarFill"></div>
-    </div>
-  </div>
+
 
   <!-- Progress Bar -->
   <div class="progress-bar" id="progressBar"></div>
@@ -928,9 +888,6 @@
     const ctx = canvas.getContext('2d');
     const progressBar = document.getElementById('progressBar');
     const frameCounter = document.getElementById('frameCounter');
-    const loadingOverlay = document.getElementById('loadingOverlay');
-    const loadingText = document.getElementById('loadingText');
-    const loadingBarFill = document.getElementById('loadingBarFill');
     const homeAudio = document.getElementById('homeAudio');
     const paymentAudio = document.getElementById('paymentAudio');
     const scrollIndicator = document.getElementById('scrollIndicator');
@@ -945,32 +902,40 @@
       return `frames/ezgif-frame-${num}.jpg`;
     }
 
-    // Preload Images
-    const images = [];
-    let loadedCount = 0;
-
-    function preloadImages() {
-      return new Promise((resolve) => {
-        for (let i = 1; i <= FRAME_COUNT; i++) {
-          const img = new Image();
-          img.src = framePath(i);
-          img.onload = img.onerror = () => {
-            loadedCount++;
-            const pct = Math.round((loadedCount / FRAME_COUNT) * 100);
-            loadingText.textContent = `${pct}% लोड भइल`;
-            loadingBarFill.style.width = `${pct}%`;
-            if (loadedCount === FRAME_COUNT) resolve();
-          };
-          images.push(img);
-        }
-      });
-    }
+    // Instant Background Image Cache:
+    // Create first frame immediately and render with zero delay
+    const images = new Array(FRAME_COUNT);
 
     function renderFrame(index) {
       const img = images[index];
       if (!img || !img.complete) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    }
+
+    // Load first frame instantly, then fetch remaining frames smoothly in background
+    function startInstantLoading() {
+      // 1. First frame loads instantly
+      const firstImg = new Image();
+      firstImg.src = framePath(1);
+      firstImg.onload = () => {
+        images[0] = firstImg;
+        renderFrame(0);
+      };
+      images[0] = firstImg;
+
+      // 2. Load the rest of the 299 frames asynchronously in chunks
+      for (let i = 2; i <= FRAME_COUNT; i++) {
+        const img = new Image();
+        img.src = framePath(i);
+        const idx = i - 1;
+        img.onload = () => {
+          images[idx] = img;
+          if (currentFrame === idx) {
+            renderFrame(idx);
+          }
+        };
+      }
     }
 
     // Dual Audio Controller:
@@ -1318,16 +1283,19 @@
       }, 2500);
     }
 
-    // INIT
-    async function init() {
-      await preloadImages();
-      loadingOverlay.classList.add('hidden');
-      renderFrame(0);
+    // INIT: Opens instantaneously in 0ms without waiting for 300 frames
+    function init() {
+      startInstantLoading();
       window.addEventListener('scroll', onScroll, { passive: true });
       updateFrame();
     }
 
-    init();
+    // Run as soon as DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
   </script>
 </body>
 </html>
